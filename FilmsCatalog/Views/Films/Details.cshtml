@@ -1,0 +1,59 @@
+﻿@model Film
+
+<form method="post">
+    <input hidden asp-for="@Model.Id" />
+    <div class="container backgroundWhite">
+        <div class="row">
+            <div class="col-12 col-md-6 pb-1">
+                <a asp-action="Index" asp-controller="Home"  style="height:50px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                    </svg>
+                    Back to List</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-light text-light ml-0 row container">
+                <div class="col-12 col-md-6">
+                    <h1 class="text-primary">@Model.Title</h1>
+                    <p class="text-warning">by @Model.Producer</p>
+                    <p class="text-primary">created @Model.Year</p>
+                </div>
+                <div class="col-12 col-md-6 text-md-right pt-4">
+                    <span class="badge badge-success pt-2" style="height: 30px;">@Model.Category.Name</span>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-8 col-lg-8">
+
+
+
+                            <div class="row pl-2">
+                                <p class="text-secondary">@Html.Raw(Model.Description)</p>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-lg-3 offset-lg-1 text-center">
+                            <img src="@Model.Poster" width="100%" class="rounded"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    @*<div class="col-12 col-md-6 pb-1">
+                        <a asp-action="Index" class="btn btn-success form-control  btn-square btn-lg" style="height: 50px;">Back to List</a>
+                    </div>*@
+                    @if (Model.IsHisPostedFilm)
+                    {
+                        <div class="col-12 col-md-12 pb-1">
+                            <a asp-action="CreateOrEdit" asp-route-id="@Model.Id" class="btn btn-success form-control  btn-square btn-lg" style="height: 50px;">Изменить</a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

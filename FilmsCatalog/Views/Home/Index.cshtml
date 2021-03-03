@@ -1,0 +1,50 @@
+﻿@using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
+@using X.PagedList;
+
+@model IEnumerable<Film>
+
+<div class="row pb-3 backgroundWhite">
+
+    @foreach (var film in Model)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="row p-2">
+                <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                    <div class="card" style="border:0px;">
+                        <img src="@film.Poster" class="card-img-top rounded" />
+                        <div class="pl-1">
+                            <p class="card-title h5"><b style="color:#2c3e50">@film.Title</b></p>
+                            <p class="card-title text-primary">Продюсер <b>@film.Producer</b></p>
+                            <p class="card-title text-primary">Жанр <b>@film.Category.Name</b></p>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Details" asp-controller="Films" class="btn btn-primary form-control" asp-route-id="@film.Id">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@if (Model.Any())
+{
+    <!-- paging control for navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page}), new X.PagedList.Mvc.Core.Common.PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        ContainerDivClasses = new[] {"navigation"},
+        LiElementClasses = new[] {"page-item"},
+        PageClasses = new[] {"page-link"},
+    })
+}
+@section Scripts{
+    <script>
+        // Workaround to fix style of text for showing items .. through ..
+        // Problem related to Boostrap 4 according to issue in link below
+        // https://github.com/dncuug/X.PagedList/issues/127
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+}
